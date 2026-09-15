@@ -697,7 +697,7 @@ document.addEventListener('click',function(e){
       if(en.intersectionRatio<0.3 && en.intersectionRect.height<window.innerHeight*0.3)return;
       var n=en.target.getAttribute('data-sec'); if(seen[n])return; seen[n]=1;
       var idx=secs.indexOf(en.target)+1; if(idx>maxIdx)maxIdx=idx;
-      if(typeof gtag==='function')gtag('event','view_section',{section_name:n,section_index:idx,page_location:location.href});
+      if(typeof gtag==='function')gtag('event','sec_'+n,{section_name:n,section_index:idx,page_location:location.href});
     });
   },{threshold:[0,0.1,0.2,0.3,0.5]});
   secs.forEach(function(s){io.observe(s);});
@@ -706,7 +706,7 @@ document.addEventListener('click',function(e){
   function depth(){
     var h=document.documentElement, total=h.scrollHeight-window.innerHeight; if(total<=0)return;
     var p=Math.round((window.scrollY||h.scrollTop)/total*100);
-    marks.forEach(function(m){ if(p>=m&&!fired[m]){fired[m]=1; if(typeof gtag==='function')gtag('event','scroll_depth',{percent_scrolled:m,page_location:location.href});} });
+    marks.forEach(function(m){ if(p>=m&&!fired[m]){fired[m]=1; if(typeof gtag==='function'){var nm='scroll_'+(m<100?('0'+m):m); gtag('event',nm,{percent_scrolled:m,page_location:location.href});}} });
   }
   var t; window.addEventListener('scroll',function(){clearTimeout(t);t=setTimeout(depth,150);},{passive:true}); depth();
 })();
