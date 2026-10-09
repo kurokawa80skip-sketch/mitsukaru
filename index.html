@@ -10,6 +10,13 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-FRTKQ3ZCVL');
 </script>
+<!-- Meta Pixel（ミツカルのLP用） -->
+<script>
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init','1298978051903826');
+  fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1298978051903826&ev=PageView&noscript=1"></noscript>
 <title>スポーツキッズ整体｜ミツカル接骨院 マークイズ静岡（年中無休・日祝も営業）</title>
 <meta name="description" content="小学生〜高校生のスポーツキッズ専門。骨格矯正・筋肉調整・ストレッチを1回で。年中無休・日祝も10:00〜20:00。マークイズ静岡2F。国家資格者による施術。"/>
 <link rel="preload" as="image" href="hero.webp" fetchpriority="high">
@@ -676,15 +683,19 @@ a:focus-visible,summary:focus-visible{outline:3px solid var(--bl);outline-offset
 })();
 </script>
 <script>
-// LINE / 電話 / 空き状況ページ のクリックをGA4イベントとして送信
+// LINE / 電話 / 空き状況ページ のクリックをGA4イベントとして送信（LINE・電話は Meta ピクセルにも送信）
 document.addEventListener('click',function(e){
-  var a=e.target.closest('a'); if(!a||typeof gtag!=='function')return;
+  var a=e.target.closest('a'); if(!a)return;
   var h=a.getAttribute('href')||'', sec=(a.closest('section,header,footer,.fcta,.ctabox')||{}).className||'';
   var name=null;
   if(h.indexOf('lin.ee')>-1)name='click_line';
   else if(h.indexOf('tel:')===0)name='click_tel';
   else if(h.indexOf('mitsukaru-schedule')>-1)name='click_schedule';
-  if(name)gtag('event',name,{link_text:(a.textContent||'').trim().slice(0,40),section:sec,page_location:location.href});
+  if(name&&typeof gtag==='function')gtag('event',name,{link_text:(a.textContent||'').trim().slice(0,40),section:sec,page_location:location.href});
+  if(typeof fbq==='function'){
+    if(name==='click_line')fbq('track','Lead',{content_name:'LINE予約ボタン',content_category:'spoki',section:sec});
+    else if(name==='click_tel')fbq('track','Contact',{content_name:'電話ボタン',content_category:'spoki',section:sec});
+  }
 });
 </script>
 <script>
